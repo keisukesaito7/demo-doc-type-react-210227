@@ -304,10 +304,32 @@ airbnbが見つかりませんよ。。的な感じ。
 
 ## 4. Prettier
 
-prettiern のプラグインをインストール。本体と、ESLint とバッティングしないためのプラグインを入れます。
+### prettier のプラグインをインストール
+
+本体と、ESLint とバッティングしないためのプラグインを入れます。
 
 ```
 $ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D prettier eslint-config-prettier'
+
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn install'
 ```
 
 ※いつも最後に typesync のエラーが出る。パスが通ってないのが原因っぽいがわからんので一旦放置。
+
+### .eslintrc.js に prettier の設定を追加
+
+```
+extends: [
+  "plugin:react/recommended",
+  "airbnb",
+  "airbnb/hooks",
+  "plugin:import/errors",
+  "plugin:import/warnings",
+  "plugin:import/typescript",
+  "plugin:@typescript-eslint/recommended",
+  "plugin:@typescript-eslint/recommended-requiring-type-checking",
+  "prettier",
+  "prettier/@typescript-eslint",
+  "prettier/react",
+  ],
+```

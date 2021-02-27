@@ -303,3 +303,11 @@ airbnbが見つかりませんよ。。的な感じ。
 ので、いったん Prettier に移ります。
 
 ## 4. Prettier
+
+prettiern のプラグインをインストール。本体と、ESLint とバッティングしないためのプラグインを入れます。
+
+```
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D prettier eslint-config-prettier'
+```
+
+※いつも最後に typesync のエラーが出る。パスが通ってないのが原因っぽいがわからんので一旦放置。

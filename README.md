@@ -329,7 +329,14 @@ extends: [
   "plugin:@typescript-eslint/recommended",
   "plugin:@typescript-eslint/recommended-requiring-type-checking",
   "prettier",
-  "prettier/@typescript-eslint",
-  "prettier/react",
+  // "prettier/@typescript-eslint",
+  // "prettier/react",
   ],
+```
+
+コメントアウトした 2 つは入れなくて OK。"prettier"に包括されてるらしく、記述を消さないとエラーになる。
+eslint とのバッティングがないかをチェックするには下のコマンド。
+
+```
+$ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{js,jsx,ts,tsx}"'
 ```

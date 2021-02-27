@@ -340,3 +340,20 @@ eslint とのバッティングがないかをチェックするには下のコ�
 ```
 $ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{js,jsx,ts,tsx}"'
 ```
+
+### package.json を更新
+
+```
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+  "fix": "npm run -s format && npm run -s lint:fix",
+  "format": "prettier --write --loglevel=warn 'src/**/*.{js,jsx,ts,tsx,gql,graphql,json}'",
+  "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+  "lint:conflict": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+  "postinstall": "typesync"
+},
+```

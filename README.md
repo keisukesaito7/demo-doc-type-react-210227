@@ -400,3 +400,11 @@ module.exports = {
 "less.validate": false,
 "scss.validate": false
 ```
+
+※これだと保存したときに、stylelint -> prettier の順に走ってしまっているのか、二回コードが整形され、stylelint が適用されない。一応、stylelint を単独で走らせることで stylelint の適用をできる。以下の通り。
+
+### stylelint をコマンドで走らせる
+
+```
+$ docker-compose run --rm frontend sh -c "cd frontend && npx stylelint src/**.css --fix"
+```

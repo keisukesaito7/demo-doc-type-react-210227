@@ -367,9 +367,24 @@ $ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{
 
 ## 5. stylelint
 
+### plugin インストール
+
 CSS 版の ESLint 的なのをインストール。stylelint 本体、公式の共有設定、並び順に関するルールセットのプラグイン、
 RECESS にもとづく CSS の並び替えのための共有設定
 
 ```
 $ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D stylelint stylelint-config-standard stylelint-order stylelint-config-recess-order'
+```
+
+### .stylelintrc.js
+
+```
+module.exports = {
+  extends: ['stylelint-config-standard', 'stylelint-config-recess-order'],
+  plugins: ['stylelint-order'],
+  ignoreFiles: ['**/node_modules/**'],
+  rules: {
+    'string-quotes': 'single',
+  },
+};
 ```

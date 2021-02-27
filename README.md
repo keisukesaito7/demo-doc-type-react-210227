@@ -247,3 +247,15 @@ module.exports = {
   "exclude": ["node_modules"]
 }
 ```
+
+### .eslintignore
+
+```
+build/
+public/
+**/coverage/
+**/node_modules/
+**/*.min.js
+*.config.js
+.*lintrc.js
+```

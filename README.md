@@ -124,3 +124,33 @@ eslint-plugin-react-hooks \
 ```
 $ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D eslint-plugin-react @typescript-eslint/eslint-plugin eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react-hooks @typescript-eslint/parser'
 ```
+
+### .eslintrc.js の extends を次のように編集をする
+
+読み込んだプラグインの設定を書かないと反映されません。
+なので設定します。
+
+```
+extends: [
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+  ],
+```
+
+```
+parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    project: "./tsconfig.eslint.json",
+    sourceType: "module",
+    tsconfigRootDir: __dirname,
+  },
+```

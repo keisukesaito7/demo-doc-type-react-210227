@@ -259,3 +259,28 @@ public/
 *.config.js
 .*lintrc.js
 ```
+
+### VSCode の設定
+
+```
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+},
+"editor.formatOnSave": false,
+"eslint.packageManager": "yarn",
+"typescript.enablePromptUseWorkspaceTsdk": true,"
+```
+
+### yarn lint で linter が走るように
+
+```
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+  "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+  "postinstall": "typesync"
+},
+```

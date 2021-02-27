@@ -357,3 +357,10 @@ $ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{
   "postinstall": "typesync"
 },
 ```
+
+### docker-compose up でチェック
+
+エラー（構文チェック）
+
+- `App.tsx` : アロー関数の{ }に関するチェック
+- `reportWebVitals.ts` : Promise 型に関するチェック？void をつけたら解決した

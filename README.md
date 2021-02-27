@@ -364,3 +364,49 @@ $ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{
 
 - `App.tsx` : アロー関数の{ }に関するチェック
 - `reportWebVitals.ts` : Promise 型に関するチェック？void をつけたら解決した
+
+## 5. stylelint
+
+### plugin インストール
+
+CSS 版の ESLint 的なのをインストール。stylelint 本体、公式の共有設定、並び順に関するルールセットのプラグイン、
+RECESS にもとづく CSS の並び替えのための共有設定
+
+```
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D stylelint stylelint-config-standard stylelint-order stylelint-config-recess-order'
+```
+
+### .stylelintrc.js
+
+```
+module.exports = {
+  extends: ['stylelint-config-standard', 'stylelint-config-recess-order'],
+  plugins: ['stylelint-order'],
+  ignoreFiles: ['**/node_modules/**'],
+  rules: {
+    'string-quotes': 'single',
+  },
+};
+```
+
+### VSCode : setting.json を更新
+
+```
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true,
+  "source.fixAll.stylelint": true
+},
+"css.validate": false,
+"less.validate": false,
+"scss.validate": false
+```
+
+※これだと保存したときに、stylelint -> prettier の順に走ってしまっているのか、二回コードが整形され、stylelint が適用されない。一応、stylelint を単独で走らせることで stylelint の適用をできる。以下の通り。
+
+### stylelint をコマンドで走らせる
+
+prettier と衝突してるっぽいので、ある程度欠いた後はこれを走らせて CSS を整形するようにしよう。
+
+```
+$ docker-compose run --rm frontend sh -c "cd frontend && npx stylelint src/**.css --fix"
+```

@@ -288,3 +288,79 @@ public/
 ```
 $ docker-compose run --rm frontend sh -c 'cd frontend && yarn lint'
 ```
+
+## 3'. docker-compose up でエラー
+
+アプリが起動できませんでした。
+
+```
+airbnbが見つかりませんよ。。的な感じ。
+```
+
+↑ ちゃんと調べてなかったですが、とりあえずプラグインがインストールできてなさそうだったので、`docker-compose run --rm frontend sh -c 'cd frontend && yarn install'`を実行。
+
+↑ エラーが変わる。ESLint で検知された構文エラーによってコンパイルができてないっぽい。
+ので、いったん Prettier に移ります。
+
+## 4. Prettier
+
+### prettier のプラグインをインストール
+
+本体と、ESLint とバッティングしないためのプラグインを入れます。
+
+```
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D prettier eslint-config-prettier'
+
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn install'
+```
+
+※いつも最後に typesync のエラーが出る。パスが通ってないのが原因っぽいがわからんので一旦放置。
+
+### .eslintrc.js に prettier の設定を追加
+
+```
+extends: [
+  "plugin:react/recommended",
+  "airbnb",
+  "airbnb/hooks",
+  "plugin:import/errors",
+  "plugin:import/warnings",
+  "plugin:import/typescript",
+  "plugin:@typescript-eslint/recommended",
+  "plugin:@typescript-eslint/recommended-requiring-type-checking",
+  "prettier",
+  // "prettier/@typescript-eslint",
+  // "prettier/react",
+  ],
+```
+
+コメントアウトした 2 つは入れなくて OK。"prettier"に包括されてるらしく、記述を消さないとエラーになる。
+eslint とのバッティングがないかをチェックするには下のコマンド。
+
+```
+$ docker-compose run --rm frontend sh -c 'npx eslint-config-prettier "src/**/*.{js,jsx,ts,tsx}"'
+```
+
+### package.json を更新
+
+```
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+  "fix": "npm run -s format && npm run -s lint:fix",
+  "format": "prettier --write --loglevel=warn 'src/**/*.{js,jsx,ts,tsx,gql,graphql,json}'",
+  "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+  "lint:conflict": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+  "postinstall": "typesync"
+},
+```
+
+### docker-compose up でチェック
+
+エラー（構文チェック）
+
+- `App.tsx` : アロー関数の{ }に関するチェック
+- `reportWebVitals.ts` : Promise 型に関するチェック？void をつけたら解決した

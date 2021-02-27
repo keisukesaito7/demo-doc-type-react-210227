@@ -154,3 +154,13 @@ parserOptions: {
     tsconfigRootDir: __dirname,
   },
 ```
+
+### tsconfig.eslint.json でチェックするファイルを限定
+
+```
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```

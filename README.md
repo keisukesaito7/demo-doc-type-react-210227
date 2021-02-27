@@ -53,7 +53,7 @@ create-react-app でアプリを作ると ESLint のパッケージがが入っ�
 ESLint のバージョンは下のコマンドで確認できる。
 
 ```
-$ dcr --rm frontend sh -c 'cd frontend && npm ls eslint'
+$ docker-compose run --rm frontend sh -c 'cd frontend && npm ls eslint'
 ```
 
 ### TypeScript のバージョンを最新に
@@ -61,7 +61,7 @@ $ dcr --rm frontend sh -c 'cd frontend && npm ls eslint'
 React17.0 から導入された JSX の新しい変換形式が TypeScript の構文チェックを通るようになったため。
 
 ```
-$ dcr --rm frontend sh -c 'cd frontend && yarn upgrade typescript@latest'
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn upgrade typescript@latest'
 ```
 
 ### ESLint の設定ファイルを作る
@@ -104,4 +104,23 @@ eslint-plugin-react@^VERSION @typescript-eslint/eslint-plugin@latest eslint-conf
 ```
 error Command failed with exit code 2.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+
+### .eslintrc.js で使ってるプラグインを手動でインストール
+
+```
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D \
+eslint-plugin-react \
+@typescript-eslint/eslint-plugin \
+eslint-config-airbnb \
+eslint-plugin-import \
+eslint-plugin-jsx-a11y \
+eslint-plugin-react-hooks \
+@typescript-eslint/parser'
+```
+
+↓ 一行で書くとこんな感じ（コピペするならこっち）
+
+```
+$ docker-compose run --rm frontend sh -c 'cd frontend && yarn add -D eslint-plugin-react @typescript-eslint/eslint-plugin eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react-hooks @typescript-eslint/parser'
 ```

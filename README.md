@@ -405,6 +405,8 @@ module.exports = {
 
 ### stylelint をコマンドで走らせる
 
+prettier と衝突してるっぽいので、ある程度欠いた後はこれを走らせて CSS を整形するようにしよう。
+
 ```
 $ docker-compose run --rm frontend sh -c "cd frontend && npx stylelint src/**.css --fix"
 ```

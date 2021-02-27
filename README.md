@@ -388,3 +388,15 @@ module.exports = {
   },
 };
 ```
+
+### VSCode : setting.json を更新
+
+```
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true,
+  "source.fixAll.stylelint": true
+},
+"css.validate": false,
+"less.validate": false,
+"scss.validate": false
+```
